@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'assets'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_assets_domain_model_asset">Asset</label>
+			<label index="tx_assets_domain_model_asset.name">Name</label>
+			<label index="tx_assets_domain_model_asset.caption">Caption</label>
+			<label index="tx_assets_domain_model_asset.alternate_text">Alternate Text</label>
+			<label index="tx_assets_domain_model_asset.description">Description</label>
+			<label index="tx_assets_domain_model_asset.file">File</label>
+			<label index="tx_assets_domain_model_asset.url">Url</label>
+			<label index="tx_assets_domain_model_asset.content">Content</label>
+			<label index="tx_assets_domain_model_asset.copyright">Copyright</label>
+			<label index="tx_assets_domain_model_asset.width">Width</label>
+			<label index="tx_assets_domain_model_asset.height">Height</label>
+			<label index="tx_assets_domain_model_asset.prefered_width">Prefered Width</label>
+			<label index="tx_assets_domain_model_asset.prefered_height">Prefered Height</label>
+			<label index="tx_assets_domain_model_asset.file_size">File Size</label>
+			<label index="tx_assets_domain_model_asset.create_date">Create Date</label>
+			<label index="tx_assets_domain_model_asset.preview">Preview</label>
+			<label index="tx_assets_domain_model_asset.categories">Categories</label>
+			<label index="tx_assets_domain_model_category">Category</label>
+			<label index="tx_assets_domain_model_category.name">Name</label>
+			<label index="tx_assets_domain_model_category.description">Description</label>
+			<label index="tx_assets_domain_model_category.parent_category">Parent Category</label>
+			<label index="tx_assets_domain_model_category.preview">Preview</label>
+		</languageKey>
+	</data>
+</T3locallang>

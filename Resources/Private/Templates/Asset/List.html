@@ -1,0 +1,13 @@
+<f:layout name="Default" />
+<f:section name="main">
+<div class="assetDirectoryList">
+	<f:for each="{assets}" as="asset" iteration="assetIterator">
+	
+		<f:render partial="Asset/Image" arguments="{asset: asset, assetIterator: assetIterator}" />
+
+		<f:render partial="Asset/Youtube" arguments="{asset: asset, assetIterator: assetIterator}" />
+
+	</f:for>
+	<div class="clear"></div>
+</div>
+</f:section>

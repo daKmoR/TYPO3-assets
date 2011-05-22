@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the Assets extension in the FRONTEND</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_assets_domain_model_asset">Asset</label>
+			<label index="tx_assets_domain_model_asset.name">name</label>
+			<label index="tx_assets_domain_model_asset.caption">caption</label>
+			<label index="tx_assets_domain_model_asset.alternate_text">alternateText</label>
+			<label index="tx_assets_domain_model_asset.description">description</label>
+			<label index="tx_assets_domain_model_asset.file">file</label>
+			<label index="tx_assets_domain_model_asset.url">url</label>
+			<label index="tx_assets_domain_model_asset.content">content</label>
+			<label index="tx_assets_domain_model_asset.copyright">copyright</label>
+			<label index="tx_assets_domain_model_asset.width">width</label>
+			<label index="tx_assets_domain_model_asset.height">height</label>
+			<label index="tx_assets_domain_model_asset.prefered_width">preferedWidth</label>
+			<label index="tx_assets_domain_model_asset.prefered_height">preferedHeight</label>
+			<label index="tx_assets_domain_model_asset.file_size">fileSize</label>
+			<label index="tx_assets_domain_model_asset.create_date">createDate</label>
+			<label index="tx_assets_domain_model_asset.preview">preview</label>
+			<label index="tx_assets_domain_model_asset.categories">categories</label>
+			<label index="tx_assets_domain_model_category">Category</label>
+			<label index="tx_assets_domain_model_category.name">name</label>
+			<label index="tx_assets_domain_model_category.description">description</label>
+			<label index="tx_assets_domain_model_category.parent_category">parentCategory</label>
+			<label index="tx_assets_domain_model_category.preview">preview</label>
+		</languageKey>
+	</data>
+</T3locallang>

@@ -1,0 +1,93 @@
+plugin.tx_assets {
+	view {
+		templateRootPath = EXT:assets/Resources/Private/Templates/
+		partialRootPath = EXT:assets/Resources/Private/Partials/
+		layoutRootPath = EXT:assets/Resources/Private/Layouts/
+	}
+	settings {
+		DisplayAssetsDirectories {
+			root = 
+			nameUnderscoreToSpace = 1
+		}
+	}
+	persistence {
+		storagePid = 
+		classes {
+			Tx_Assets_Domain_Model_Asset {
+				subclasses {
+					Tx_Assets_Domain_Model_File = Tx_Assets_Domain_Model_File
+					Tx_Assets_Domain_Model_Image = Tx_Assets_Domain_Model_Image
+					Tx_Assets_Domain_Model_Text = Tx_Assets_Domain_Model_Text
+					Tx_Assets_Domain_Model_Html = Tx_Assets_Domain_Model_Html
+					Tx_Assets_Domain_Model_Url = Tx_Assets_Domain_Model_Url
+					Tx_Assets_Domain_Model_Youtube = Tx_Assets_Domain_Model_Youtube
+				}
+			}
+			Tx_Assets_Domain_Model_File {
+				mapping {
+					tableName = tx_assets_domain_model_asset
+					recordType = Tx_Assets_Domain_Model_File
+				}
+			}
+			Tx_Assets_Domain_Model_Image {
+				mapping {
+					tableName = tx_assets_domain_model_asset
+					recordType = Tx_Assets_Domain_Model_Image
+					columns {
+						file.mapOnProperty = image
+					}
+				}
+			}
+			Tx_Assets_Domain_Model_Text {
+				mapping {
+					tableName = tx_assets_domain_model_asset
+					recordType = Tx_Assets_Domain_Model_Text
+					columns {
+						content.mapOnProperty = text
+					}
+				}
+			}
+			Tx_Assets_Domain_Model_Html {
+				mapping {
+					tableName = tx_assets_domain_model_asset
+					recordType = Tx_Assets_Domain_Model_Html
+					columns {
+						content.mapOnProperty = html
+					}
+				}
+			}
+			Tx_Assets_Domain_Model_Url {
+				mapping {
+					tableName = tx_assets_domain_model_asset
+					recordType = Tx_Assets_Domain_Model_Url
+				}
+			}
+			Tx_Assets_Domain_Model_Youtube {
+				mapping {
+					tableName = tx_assets_domain_model_asset
+					recordType = Tx_Assets_Domain_Model_Youtube
+				}
+			}
+		}
+	}
+}
+
+plugin.tx_assets._CSS_DEFAULT_STYLE (
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	.tx-assets table {
+		border-collapse:separate;
+		border-spacing:10px;
+	}
+
+	.tx-assets table th {
+		font-weight:bold;
+	}
+
+	.tx-assets table td {
+		vertical-align:top;
+	}
+)

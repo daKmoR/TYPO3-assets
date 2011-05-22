@@ -1,0 +1,11 @@
+<f:if condition="{asset.youtubeId}">
+	<f:then>
+		<div class="assetItem youtube">
+			<a href="http://youtu.be/{asset.youtubeId}" class="lightbox youtube">
+				<img src="http://img.youtube.com/vi/{asset.youtubeId}/default.jpg" alt="{asset.name}" />
+				<span></span>
+			</a>
+			<p>{asset.name}</p>
+		</div>
+	</f:then>
+</f:if>
