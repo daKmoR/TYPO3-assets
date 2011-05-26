@@ -1,11 +1,16 @@
+{namespace a=Tx_Assets_ViewHelpers}
+
 <f:layout name="Default" />
 <f:section name="main">
 <div class="assetDirectoryList">
 	<f:for each="{assets}" as="asset" iteration="assetIterator">
 	
-		<f:render partial="Asset/Image" arguments="{asset: asset, root: root, assetIterator: assetIterator}" />
-
-		<f:render partial="Asset/Youtube" arguments="{asset: asset, root: root, assetIterator: assetIterator}" />
+		<f:if condition="{asset -> a:isImage()}">
+			<f:render partial="Asset/Image" arguments="{asset: asset, assetIterator: assetIterator}" />
+		</f:if>
+		<f:if condition="{asset -> a:isYoutube()}">
+			<f:render partial="Asset/Youtube" arguments="{asset: asset, assetIterator: assetIterator}" />
+		</f:if>
 
 	</f:for>
 	<div class="clear"></div>

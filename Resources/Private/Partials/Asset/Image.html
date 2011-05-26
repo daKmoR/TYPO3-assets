@@ -1,11 +1,6 @@
-<f:if condition="{asset.image}">
-	<f:then>
-		<div class="assetItem youtube">
-			<a href="{f:uri.image(src: '{asset.image}' maxWidth: 500, maxHeight: 500)}" class="lightbox image">
-				<f:image src="{asset.image}" alt="{asset.name}" width="120" height="90" />
-				<span></span>
-			</a>
-			<p>{asset.name}</p>
-		</div>
-	</f:then>
-</f:if>
+<div class="assetItem assetItemImage">
+	<a href="{f:uri.image(src: '{asset.image}' maxWidth: 500, maxHeight: 500)}" class="lightbox assetItemImage">
+		<f:image src="{asset.image}" alt="{asset.name}" maxWidth="90" maxHeight="120" />
+		<span></span>
+	</a>
+</div>
