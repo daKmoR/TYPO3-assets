@@ -48,7 +48,8 @@ class Tx_Assets_Domain_Repository_AssetFileRepository extends Tx_Assets_Domain_R
 				case 'jpg':
 					$asset = t3lib_div::makeInstance('Tx_Assets_Domain_Model_Image');
 					$exifService = t3lib_div::makeInstance('Tx_Assets_Service_Exif', $file);
-					$asset->setName($exifService->getDescription());
+					$asset->setName($exifService->getTitle());
+					$asset->setCopyright($exifService->getAuthor());
 					$asset->setImage($file);
 					break;
 				case 'url':
