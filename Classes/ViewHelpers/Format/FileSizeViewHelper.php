@@ -1,7 +1,6 @@
 <?php
-
 /*                                                                        *
- * This script belongs to the FLOW3 package "Fluid".                      *
+ * This script belongs to the FLOW3 package "Assets".                     *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -21,64 +20,38 @@
  *                                                                        */
 
 /**
- * Formats a DateTime object.
+ * Formats a FileSize.
  *
  * = Examples =
  *
  * <code title="Defaults">
- * <f:format.date>{dateObject}</f:format.date>
+ * <f:format.fileSize>166.202</f:format.fileSize>
  * </code>
  * <output>
- * 1980-12-13
- * (depending on the current date)
+ * 162,31 KB
  * </output>
  *
- * <code title="Custom date format">
- * <f:format.date format="H:i">{dateObject}</f:format.date>
+ * <code title="Custom decimals">
+ * <f:format.fileSize decimals="0">166.202</f:format.fileSize>
  * </code>
  * <output>
- * 01:23
- * (depending on the current time)
- * </output>
- *
- * <code title="Localized dates using strftime date format">
- * <f:format.date format="%d. %B %Y">{dateObject}</f:format.date>
- * </code>
- * <output>
- * 13. Dezember 1980
- * (depending on the current date and defined locale. In the example you see the 1980-12-13 in a german locale)
- * </output>
- *
- * <code title="strtotime string">
- * <f:format.date format="d.m.Y - H:i:s">+1 week 2 days 4 hours 2 seconds</f:format.date>
- * </code>
- * <output>
- * 13.12.1980 - 21:03:42
- * (depending on the current time, see http://www.php.net/manual/en/function.strtotime.php)
- * </output>
- *
- * <code title="output date from unix timestamp">
- * <f:format.date format="d.m.Y - H:i:s">@{someTimestamp}</f:format.date>
- * </code>
- * <output>
- * 13.12.1980 - 21:03:42
- * (depending on the current time. Don't forget the "@" in front of the timestamp see http://www.php.net/manual/en/function.strtotime.php)
+ * 160 KB
  * </output>
  *
  * <code title="Inline notation">
- * {f:format.date(date: dateObject)}
+ * {f:format.fileSize(size: sizeObject)}
  * </code>
  * <output>
- * 1980-12-13
- * (depending on the value of {dateObject})
+ * 1,28 GB
+ * (depending on the value of {sizeObject})
  * </output>
  *
  * <code title="Inline notation (2nd variant)">
- * {dateObject -> f:format.date()}
+ * {sizeObject -> f:format.fileSize()}
  * </code>
  * <output>
- * 1980-12-13
- * (depending on the value of {dateObject})
+ * 1,28 GB
+ * (depending on the value of {sizeObject})
  * </output>
  *
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
@@ -107,9 +80,11 @@ class Tx_Assets_ViewHelpers_Format_FileSizeViewHelper extends Tx_Fluid_Core_View
 		}
 		
 		// code inspired by http://codebyte.dev7studios.com/post/1590919646/php-format-filesize
-    if ($size == 0) return('n/a');
+		if ($size == 0) {
+			return('n/a');
+		}
 		$convertedSize = $size/pow(1024, ($i = floor(log($size, 1024))));
-    return number_format($convertedSize, $decimals, $decimalSeparator, $thousandsSeparator) . ' ' . $sizes[$i];
+		return number_format($convertedSize, $decimals, $decimalSeparator, $thousandsSeparator) . ' ' . $sizes[$i];
 	}
 	
 }

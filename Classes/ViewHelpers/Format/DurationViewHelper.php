@@ -1,7 +1,6 @@
 <?php
-
 /*                                                                        *
- * This script belongs to the FLOW3 package "Fluid".                      *
+ * This script belongs to the FLOW3 package "Assets".                     *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *
@@ -42,15 +41,6 @@
  * 27.October - 02.November 2011
  * (depending on the dates)
  * </output>
- *
- * <code title="Localized dates using strftime date format">
- * <f:format.date format="%d. %B %Y">{dateObject}</f:format.date>
- * </code>
- * <output>
- * 13. Dezember 1980
- * (depending on the current date and defined locale. In the example you see the 1980-12-13 in a german locale)
- * </output>
- *
  *
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @api

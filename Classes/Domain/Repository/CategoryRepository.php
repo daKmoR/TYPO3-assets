@@ -27,7 +27,7 @@
 /**
  * Repository for Tx_Assets_Domain_Model_Category
  */
- class Tx_Assets_Domain_Repository_CategoryRepository extends Tx_Extbase_Persistence_Repository {
+class Tx_Assets_Domain_Repository_CategoryRepository extends Tx_Extbase_Persistence_Repository {
 
 }
 ?>
