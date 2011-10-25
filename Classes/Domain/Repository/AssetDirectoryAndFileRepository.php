@@ -25,13 +25,13 @@
 
 
 /**
- * Repository for Tx_Assets_Domain_Model_Asset
+ * Repository for Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository
  */
 class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 
 	/**
 	 * Constructor
-	 **/
+	 */
 	public function __construct($root = NULL, $settings = NULL) {
 		$this->assetDirectoryRepository = t3lib_div::makeInstance('Tx_Assets_Domain_Repository_AssetDirectoryRepository');
 		$this->assetFileRepository = t3lib_div::makeInstance('Tx_Assets_Domain_Repository_AssetFileRepository');
@@ -46,8 +46,10 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 	}
 
 	/**
+	 * Inits the whole Directory and File Repository
+	 *
+	 * @param string $root you can supply a root on init
 	 * @return void
-	 * @api
 	 */
 	public function init($root = '') {
 		$this->root = is_dir($root) ? $root : $this->root;
@@ -77,6 +79,11 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 		$this->checkRoles();
 	}
 	
+	/**
+	 * checks each directory for defined roles, if there are any and the logged in user has none of the roles it will be removed
+	 *
+	 * @return void
+	 */
 	public function checkRoles() {
 		$categories = $this->assetDirectoryRepository->findAll();
 		foreach($categories as $category) {
@@ -87,6 +94,12 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 		}
 	}
 	
+	/**
+	 * removes a Category form the repository and all it's subcategories and assets
+	 *
+	 * @param Tx_Assets_Domain_Model_Category $category
+	 * @return void
+	 */
 	public function removeCategory($category) {
 		$subCategories = $category->getSubCategories();
 		if ($subCategories) {
@@ -125,6 +138,13 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 		return false;
 	}
 	
+	/**
+	 * Recursively checks all categories and if there is a file .folderinfo it will override the category and assets properties with the properties defined in the yaml file
+	 * It will override from the most inner .folderinfo to the outer once. So a .folderinfo in the root will always win
+	 *
+	 * @param Tx_Assets_Domain_Model_Category $category
+	 * @return void
+	 */
 	protected function processCategory(&$category) {
 		foreach($category->getSubCategories() as $subCategory) {
 			$this->processCategory($subCategory);
@@ -136,6 +156,13 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 		}
 	}
 	
+	/**
+	 * Checks the given Infos and override category and assets infos.
+	 * It allows also to override infos for SubCategories (array of infoSubCategories) and assets (array of infoAssets)
+	 *
+	 * @param Tx_Assets_Domain_Model_Category $category
+	 * @return void
+	 */
 	protected function overrideCategoryWithFolderInfo(&$category, $info) {
 		if (!is_string($category) && is_array($info['category'])) {
 			foreach($info['category'] as $key => $value) {
@@ -171,7 +198,11 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 		
 	}
 	
-	
+	/**
+	 * removes a Category form the repository and all it's subcategories and assets
+	 *
+	 * @return void
+	 */
 	protected function overrideWithFolderInfo() {
 		$categories = $this->assetDirectoryRepository->findWithNoParent();
 		foreach($categories as &$category) {
@@ -186,7 +217,7 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 	
 	/**
 	 * @param string $searchWord 
-	 * @return void
+	 * @return array of found assets and categories
 	 */
 	public function findSearchWord($searchWord) {
 		$assets = $this->assetFileRepository->findSearchWord($searchWord);

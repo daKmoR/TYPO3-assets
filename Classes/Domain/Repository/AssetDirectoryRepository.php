@@ -25,15 +25,14 @@
 
 
 /**
- * Repository for Tx_Assets_Domain_Model_Asset
+ * Repository for Tx_Assets_Domain_Repository_AssetDirectoryRepository
  */
 class Tx_Assets_Domain_Repository_AssetDirectoryRepository extends Tx_Assets_Domain_Repository_AssetPathRepository implements Tx_Extbase_Persistence_RepositoryInterface {
 	
 	/**
-	 * inits 
+	 * inits the Diretory Repository
 	 *
 	 * @return void
-	 * @api
 	 */
 	public function init() {
 		$this->objects = array();
@@ -41,7 +40,7 @@ class Tx_Assets_Domain_Repository_AssetDirectoryRepository extends Tx_Assets_Dom
 	}
 	
 	/**
-	 * inits 
+	 * Recursively inits the diretory and all sub directories
 	 *
 	 * @return void
 	 */	
@@ -82,6 +81,11 @@ class Tx_Assets_Domain_Repository_AssetDirectoryRepository extends Tx_Assets_Dom
 		return $result;
 	}
 	
+	/**
+	 * Finds the directory for a given path
+	 *
+	 * @return Tx_Assets_Domain_Mode_Directory
+	 */
 	public function findByPath($path) {
 		foreach($this->objects as $object) {
 			if ($object->getPath() === $path) {

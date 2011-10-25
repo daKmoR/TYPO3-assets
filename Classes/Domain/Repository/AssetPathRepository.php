@@ -25,7 +25,7 @@
 
 
 /**
- * Repository for Tx_Assets_Domain_Model_Asset
+ * Repository for Tx_Assets_Domain_Repository_AssetPathRepository
  */
 class Tx_Assets_Domain_Repository_AssetPathRepository implements Tx_Extbase_Persistence_RepositoryInterface {
 

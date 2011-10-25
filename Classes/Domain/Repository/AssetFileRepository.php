@@ -25,15 +25,14 @@
 
 
 /**
- * Repository for Tx_Assets_Domain_Model_Asset
+ * Repository for Tx_Assets_Domain_Repository_AssetFileRepository
  */
 class Tx_Assets_Domain_Repository_AssetFileRepository extends Tx_Assets_Domain_Repository_AssetPathRepository implements Tx_Extbase_Persistence_RepositoryInterface {
 
 	/**
-	 * inits 
+	 * inits the File Repository
 	 *
 	 * @return void
-	 * @api
 	 */
 	public function init() {
 		$this->objects = array();
@@ -104,6 +103,11 @@ class Tx_Assets_Domain_Repository_AssetFileRepository extends Tx_Assets_Domain_R
 		}
 	}
 	
+	/**
+	 * finds an asset by a given file path
+	 *
+	 * @return Tx_Assets_Domain_Mode_Asset
+	 */
 	public function findByFile($file) {
 		foreach($this->objects as $object) {
 			if ($object->getFile() === $file) {
