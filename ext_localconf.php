@@ -7,12 +7,10 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
 	'DisplayAssets',
 	array(
-		'Asset' => 'list, show, new, create, edit, update, delete',
-		'Category' => 'list, show, new, create, edit, update, delete',
+		'Asset' => 'list',
 	),
 	array(
-		'Asset' => 'create, update, delete',
-		'Category' => 'create, update, delete',
+		// 'Asset' => 'create, update, delete',
 	)
 );
 
@@ -20,10 +18,10 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	$_EXTKEY,
 	'DisplayAssetsDirectories',
 	array(
-		'AssetDirectory' => 'list, show, new, create, edit, update, delete',
+		'AssetDirectory' => 'list',
 	),
 	array(
-		'AssetDirectory' => 'create, update, delete',
+		// 'AssetDirectory' => 'create, update, delete',
 	)
 );
 

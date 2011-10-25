@@ -2,17 +2,18 @@
 
 <f:layout name="Default" />
 <f:section name="main">
-<div class="assetList">
+<div class="assetList clearfix">
 	<f:for each="{assets}" as="asset" iteration="assetIterator">
 	
 		<f:if condition="{asset -> a:isImage()}">
-			<f:render partial="Asset/Image" arguments="{asset: asset, assetIterator: assetIterator}" />
-		</f:if>
-		<f:if condition="{asset -> a:isYoutube()}">
-			<f:render partial="Asset/Youtube" arguments="{asset: asset, assetIterator: assetIterator}" />
+			<div class="assetItem assetItemImage">
+				<a href="{f:uri.image(src: '{asset.image}' maxWidth: 500, maxHeight: 500)}" class="lightbox assetItemImage">
+					<f:image src="{asset.image}" alt="{asset.name}" maxWidth="90" maxHeight="120" />
+					<span></span>
+				</a>
+			</div>
 		</f:if>
 
 	</f:for>
-	<div class="clear"></div>
 </div>
 </f:section>

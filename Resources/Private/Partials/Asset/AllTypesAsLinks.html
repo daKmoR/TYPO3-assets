@@ -1,8 +1,0 @@
-{namespace a=Tx_Assets_ViewHelpers}
-
-<f:if condition="{asset -> a:isImage()}">
-	<f:render partial="Asset/ImageAsLink" arguments="{asset: asset, assetIterator: assetIterator}" />
-</f:if>
-<f:if condition="{asset -> a:isYoutube()}">
-	<f:render partial="Asset/YoutubeAsLink" arguments="{asset: asset, assetIterator: assetIterator}" />
-</f:if>
