@@ -24,11 +24,11 @@
 ***************************************************************/
 
 /**
- * This ViewHelper checks if a given object is of type Tx_Assets_Domain_Model_Image
+ * This ViewHelper checks if a given object is of type Tx_Assets_Domain_Model_Image or SubType
  *
  * = Examples =
  *
- * <code title="Show only if of type Tx_Assets_Domain_Model_Image">
+ * <code title="Show only if of type Tx_Assets_Domain_Model_Image or SubType">
  * <f:if condition="{object -> a:isImage()}">
  *   show only if of type Tx_Assets_Domain_Model_Image
  * </f:if>
@@ -43,10 +43,10 @@
 class Tx_Assets_ViewHelpers_IsImageViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * Check if the object is an Asset Image
+	 * Check if the object is an Asset Image or SubType
 	 *
 	 * @param object $subject The Object to check
-	 * @return boolean Tx_Assets_Domain_Model_Image yes/no
+	 * @return boolean
 	 * @author Thomas Allmer <at@delusionworld.com>
 	 * @api
 	 */

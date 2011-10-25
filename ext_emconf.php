@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Assets',
-	'description' => 'organize your content and display it accordingly',
+	'description' => 'List you assets/files from a Database or a Directory Structure, usable for galleries, file directories, image databases...',
 	'category' => '',
 	'author' => 'Thomas Allmer',
 	'author_email' => 'at@delusionworld.com',

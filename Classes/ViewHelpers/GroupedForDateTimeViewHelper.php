@@ -1,7 +1,7 @@
 <?php
 
 /*                                                                        *
- * This script belongs to the FLOW3 package "Fluid".                      *
+ * This script belongs to the FLOW3 package "Assets".                     *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU Lesser General Public License as published by the *

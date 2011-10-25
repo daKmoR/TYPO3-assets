@@ -24,13 +24,13 @@
 ***************************************************************/
 
 /**
- * This ViewHelper checks if a given object is of type Tx_Assets_Domain_Model_Audio or Subtype
+ * This ViewHelper checks if a given object is of type Tx_Assets_Domain_Model_Audio or SubType
  *
  * = Examples =
  *
- * <code title="Show only if of type Tx_Assets_Domain_Model_Audio or Subtime">
+ * <code title="Show only if of type Tx_Assets_Domain_Model_Audio or SubType">
  * <f:if condition="{object -> a:isAudio()}">
- *   show only if of type Tx_Assets_Domain_Model_Audio or Subtype
+ *   show only if of type Tx_Assets_Domain_Model_Audio or SubType
  * </f:if>
  * </code>
  * <output>
@@ -43,10 +43,10 @@
 class Tx_Assets_ViewHelpers_IsAudioViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * Check if the object is an Asset Image
+	 * Check if the object is an Asset Audio or Subtype
 	 *
 	 * @param object $subject The Object to check
-	 * @return boolean yes/no
+	 * @return boolean
 	 * @author Thomas Allmer <at@delusionworld.com>
 	 * @api
 	 */
