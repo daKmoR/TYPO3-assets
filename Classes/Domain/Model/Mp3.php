@@ -25,9 +25,9 @@
 
 
 /**
- * File
+ * Mp3
  */
-class Tx_Assets_Domain_Model_File extends Tx_Assets_Domain_Model_Files {
+class Tx_Assets_Domain_Model_Mp3 extends Tx_Assets_Domain_Model_Files {
 
 }
 ?>

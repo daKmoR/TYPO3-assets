@@ -28,6 +28,14 @@
 			<label index="tx_assets_domain_model_category.description">Description</label>
 			<label index="tx_assets_domain_model_category.parent_category">Parent Category</label>
 			<label index="tx_assets_domain_model_category.preview">Preview</label>
+			<label index="tx_assets_domain_model_standardasset">Standard Asset</label>
+			<label index="tx_assets_domain_model_standardasset.use_in_preview">Use In Preview</label>
+			<label index="tx_assets_domain_model_standardasset.add_as_download">Add As Download</label>
+			<label index="tx_assets_domain_model_standardasset.override_name">Override Name</label>
+			<label index="tx_assets_domain_model_standardasset.override_description">Override Description</label>
+			<label index="tx_assets_domain_model_standardasset.override_copyright">Override Copyright</label>
+			<label index="tx_assets_domain_model_standardasset.override_caption">Override Caption</label>
+			<label index="tx_assets_domain_model_standardasset.asset">Asset</label>			
 		</languageKey>
 	</data>
 </T3locallang>

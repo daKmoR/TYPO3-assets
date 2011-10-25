@@ -66,21 +66,14 @@ class Tx_Assets_Domain_Model_Image extends Tx_Assets_Domain_Model_Files {
 	 * @return void
 	 */
 	public function setImage($image) {
-		$this->image = $image;
+		$this->file = $image;
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getImage() {
-		return $this->image;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getFileName() {
-		return pathinfo($this->image, PATHINFO_BASENAME);
+		return $this->file;
 	}
 
 	/**

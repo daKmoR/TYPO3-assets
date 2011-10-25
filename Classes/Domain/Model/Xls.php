@@ -25,9 +25,32 @@
 
 
 /**
- * File
+ * pdf
  */
-class Tx_Assets_Domain_Model_File extends Tx_Assets_Domain_Model_Files {
+class Tx_Assets_Domain_Model_Xls extends Tx_Assets_Domain_Model_Files {
+
+	/**
+	 * @return void
+	 */
+	public function overrideWithMetaData() {
+		$xlsMetadataService = t3lib_div::makeInstance('Tx_Assets_Service_XlsMetadata', $this->getFile());
+		if ($xlsMetadataService->getTitle() !== '') {
+			$this->setName($xlsMetadataService->getTitle());
+		}
+		
+		if ($xlsMetadataService->getSubject() !== '') {
+			try {
+				$date = new DateTime($xlsMetadataService->getSubject());
+				$this->setCreateDate($date);
+			} catch (Exception $exception) {
+				$this->setDescription($xlsMetadataService->getSubject());
+			}
+		}
+		
+		if ($xlsMetadataService->getKeywords() !== '') {
+			$this->setKeywords($xlsMetadataService->getKeywords());
+		}
+	}
 
 }
 ?>

@@ -3,29 +3,28 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
+$extensionName = t3lib_div::underscoredToUpperCamelCase($_EXTKEY);
+
+$configurationArray = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$_EXTKEY]);
+$configurationArray['manualSorting'] = 1;
+
 Tx_Extbase_Utility_Extension::registerPlugin(
 	$_EXTKEY,
 	'DisplayAssets',
 	'Display Assets'
 );
-
-//$pluginSignature = str_replace('_','',$_EXTKEY) . '_' . display;
-//$TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-//t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_' .display. '.xml');
+// $pluginSignature = strtolower($extensionName) . '_displayassets';
+// $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+// t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_displayassets.xml');
 
 Tx_Extbase_Utility_Extension::registerPlugin(
 	$_EXTKEY,
 	'DisplayAssetsDirectories',
 	'Display Assets from Directories'
 );
-
-//$pluginSignature = str_replace('_','',$_EXTKEY) . '_' . asset_directory;
-//$TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
-//t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_' .asset_directory. '.xml');
-
-
-
-
+$pluginSignature = strtolower($extensionName) . '_displayassetsdirectories';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_displayassetsdirectories.xml');
 
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Assets');
@@ -52,7 +51,9 @@ $TCA['tx_assets_domain_model_asset'] = array(
 			'disabled' => 'hidden',
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
-			),
+		),
+		'default_sortby' => 'ORDER BY crdate',
+		'sortby' => ($configurationArray['manualSorting'] == 1 ? 'sorting' : ''),
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Asset.php',
 		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_assets_domain_model_asset.gif'
 	),
@@ -81,6 +82,34 @@ $TCA['tx_assets_domain_model_category'] = array(
 			),
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Category.php',
 		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_assets_domain_model_category.gif'
+	),
+);
+
+t3lib_extMgm::addLLrefForTCAdescr('tx_assets_domain_model_standardasset', 'EXT:assets/Resources/Private/Language/locallang_csh_tx_assets_domain_model_standardasset.xml');
+t3lib_extMgm::allowTableOnStandardPages('tx_assets_domain_model_standardasset');
+$TCA['tx_assets_domain_model_standardasset'] = array(
+	'ctrl' => array(
+		'title'	=> 'LLL:EXT:assets/Resources/Private/Language/locallang_db.xml:tx_assets_domain_model_standardasset',
+		'label' => 'asset',
+		'type' => 'record_type',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,
+		'origUid' => 't3_origuid',
+		'languageField' => 'sys_language_uid',
+		'transOrigPointerField' => 'l10n_parent',
+		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
+		),
+		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/StandardAsset.php',
+		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_items_domain_model_standardasset.gif'
 	),
 );
 

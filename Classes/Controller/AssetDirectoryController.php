@@ -38,35 +38,22 @@ class Tx_Assets_Controller_AssetDirectoryController extends Tx_Extbase_MVC_Contr
 		$this->settings = $this->settings['DisplayAssetsDirectories'];
 		$this->root = $this->settings['root'];
 	
-		if(empty($this->root)){
-			$this->flashMessageContainer->add('You need to define the root directory. (example with ts: plugin.tx_assets.settings.DisplayAssetsDirectories.root = fileadmin/galerie/)');
-		}
-	
-		// $this->assetDirectoryRepository = t3lib_div::makeInstance('Tx_Assets_Domain_Repository_AssetDirectoryRepository');
-		// $this->assetDirectoryRepository->setRoot($this->root);
-		// $this->assetDirectoryRepository->init();
-		
-		$this->assetFileRepository = t3lib_div::makeInstance('Tx_Assets_Domain_Repository_AssetFileRepository');
-		$this->assetFileRepository->setRoot($this->root);
-		$this->assetFileRepository->init();
+		$this->assetDirectoryAndFileRepository = t3lib_div::makeInstance('Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository');
+		$this->assetDirectoryAndFileRepository->setRoot($this->root);
+		$this->assetDirectoryAndFileRepository->setSettings($this->settings);
+		$this->assetDirectoryAndFileRepository->init();
 	}
-
+	
 	/**
 	 * Displays all Assets
 	 *
 	 * @return void
 	 */
 	public function listAction() {
-		//$assets = $this->assetDirectoryRepository->findAll();
-		$assets = $this->assetFileRepository->findAll();
+		$categories = $this->assetDirectoryAndFileRepository->assetDirectoryRepository->findWithNoParent();
+		$assets = $this->assetDirectoryAndFileRepository->assetFileRepository->findWithNoCategory();
 		
-		if ($this->settings['nameUnderscoreToSpace']) {
-			foreach($assets as &$asset) {
-				$asset->setName(str_replace('_', ' ', $asset->getName()));
-			}
-		}
-		
-		//var_dump($assets);
+		$this->view->assign('categories', $categories);
 		$this->view->assign('assets', $assets);
 	}
 

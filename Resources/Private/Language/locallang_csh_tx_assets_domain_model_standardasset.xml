@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>Context Sensitive Help (CSH) for table tx_assets_domain_model_standardasset</description>
+		<type>CSH</type>
+		<csh_table>tx_assets_domain_model_standardasset</csh_table>
+	</meta>
+	<data type="array">
+	<languageKey index="default" type="array">
+			<label index="use_in_preview.description">useInPreview</label>
+			<label index="add_as_download.description">addAsDownload</label>
+			<label index="override_name.description">overrideName</label>
+			<label index="override_description.description">overrideDescription</label>
+			<label index="override_copyright.description">overrideCopyright</label>
+			<label index="override_caption.description">overrideCaption</label>
+			<label index="asset.description">asset</label>
+		</languageKey>
+	</data>
+</T3locallang>

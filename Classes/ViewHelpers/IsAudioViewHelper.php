@@ -24,37 +24,37 @@
 ***************************************************************/
 
 /**
- * This ViewHelper checks if a given object is of type Tx_Assets_Domain_Model_Image
+ * This ViewHelper checks if a given object is of type Tx_Assets_Domain_Model_Audio or Subtype
  *
  * = Examples =
  *
- * <code title="Show only if of type Tx_Assets_Domain_Model_Image">
- * <f:if condition="{object -> a:isImage()}">
- *   show only if of type Tx_Assets_Domain_Model_Image
+ * <code title="Show only if of type Tx_Assets_Domain_Model_Audio or Subtime">
+ * <f:if condition="{object -> a:isAudio()}">
+ *   show only if of type Tx_Assets_Domain_Model_Audio or Subtype
  * </f:if>
  * </code>
  * <output>
- * show only if of type Tx_Assets_Domain_Model_Image (depending on {object})
+ * show only if of type Tx_Assets_Domain_Model_Audio or Subtype (depending on {object})
  * </output>
  *
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @api
  */
-class Tx_Assets_ViewHelpers_IsImageViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_Assets_ViewHelpers_IsAudioViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
 	 * Check if the object is an Asset Image
 	 *
 	 * @param object $subject The Object to check
-	 * @return boolean Tx_Assets_Domain_Model_Image yes/no
+	 * @return boolean yes/no
 	 * @author Thomas Allmer <at@delusionworld.com>
 	 * @api
 	 */
 	public function render($subject = NULL) {
 		if ($subject === NULL) {
 			$subject = $this->renderChildren();
-		}	
-		if (is_object($subject) && (get_class($subject) === 'Tx_Assets_Domain_Model_Image' ||	get_class($subject) === 'Tx_Assets_Domain_Model_Jpg')) {
+		}
+		if (is_object($subject) && (get_class($subject) === 'Tx_Assets_Domain_Model_Audio' ||	get_class($subject) === 'Tx_Assets_Domain_Model_Mp3')) {
 			return true;
 		}
 		return false;

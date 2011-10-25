@@ -7,7 +7,9 @@ plugin.tx_assets {
 	settings {
 		DisplayAssetsDirectories {
 			root = 
-			nameUnderscoreToSpace = 1
+			underscoresToSpacesInName = 1
+			deleteLeadingNumbersInName = 1 # a leading number is 0000_ (including the "_"; the amount of 0s is irrelevant)
+			showHidden = 0
 		}
 	}
 	persistence {
@@ -33,9 +35,6 @@ plugin.tx_assets {
 				mapping {
 					tableName = tx_assets_domain_model_asset
 					recordType = Tx_Assets_Domain_Model_Image
-					columns {
-						file.mapOnProperty = image
-					}
 				}
 			}
 			Tx_Assets_Domain_Model_Text {
@@ -73,21 +72,5 @@ plugin.tx_assets {
 }
 
 plugin.tx_assets._CSS_DEFAULT_STYLE (
-	input.f3-form-error {
-		background-color:#FF9F9F;
-		border: 1px #FF0000 solid;
-	}
 
-	.tx-assets table {
-		border-collapse:separate;
-		border-spacing:10px;
-	}
-
-	.tx-assets table th {
-		font-weight:bold;
-	}
-
-	.tx-assets table td {
-		vertical-align:top;
-	}
 )

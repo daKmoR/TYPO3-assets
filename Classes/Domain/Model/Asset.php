@@ -63,6 +63,11 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @var string $copyright
 	 */
 	protected $copyright;
+	
+	/**
+	 * @var string $keywords
+	 */
+	protected $keywords;	
 
 	/**
 	 * createDate
@@ -160,8 +165,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Returns the copyright
-	 *
 	 * @return string $copyright
 	 */
 	public function getCopyright() {
@@ -169,13 +172,26 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Sets the copyright
-	 *
 	 * @param string $copyright
 	 * @return void
 	 */
 	public function setCopyright($copyright) {
 		$this->copyright = $copyright;
+	}
+	
+	/**
+	 * @return string $keywords
+	 */
+	public function getKeywords() {
+		return $this->keywords;
+	}
+
+	/**
+	 * @param string $keywords
+	 * @return void
+	 */
+	public function setKeywords($keywords) {
+		$this->keywords = $keywords;
 	}
 
 	/**

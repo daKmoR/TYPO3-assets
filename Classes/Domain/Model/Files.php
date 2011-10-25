@@ -28,11 +28,26 @@
  * Files
  */
 abstract class Tx_Assets_Domain_Model_Files extends Tx_Assets_Domain_Model_Asset {
+	
+	/**
+	 * @var string $file
+	 */
+	protected $file;
 
 	/**
 	 * @var float $fileSize
 	 */
 	protected $fileSize;
+	
+	/**
+	 * @return void
+	 */
+	public function __construct($file = NULL) {
+		$this->setFile($file);
+		
+		parent::__construct();
+	}
+	
 
 	/**
 	 * @return float $fileSize
@@ -48,6 +63,39 @@ abstract class Tx_Assets_Domain_Model_Files extends Tx_Assets_Domain_Model_Asset
 	public function setFileSize($fileSize) {
 		$this->fileSize = $fileSize;
 	}
+
+	/**
+	 * @param string $file
+	 * @return boolean successfull set or not a valid file
+	 */
+	public function setFile($file) {
+		if (is_file($file)) {
+			$this->file = $file;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getFile() {
+		return $this->file;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getFileName() {
+		return pathinfo($this->getFile(), PATHINFO_BASENAME);
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getFileExtension() {
+		return pathinfo($this->getFile(), PATHINFO_EXTENSION);
+	}	
 
 }
 ?>

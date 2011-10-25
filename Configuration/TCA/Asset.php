@@ -158,11 +158,14 @@ $TCA['tx_assets_domain_model_asset'] = array(
 			'label' => 'LLL:EXT:assets/Resources/Private/Language/locallang_db.xml:tx_assets_domain_model_asset.file',
 			'config' => array(
 				'type' => 'group',
-				'internal_type' => 'file',
+				'internal_type' => 'file_reference',
 				'uploadfolder' => 'uploads/tx_assets',
 				'allowed' => '*',
 				'disallowed' => 'php',
-				'size' => 5,
+				'size' => '1',
+				'autoSizeMax' => 1,
+				'maxitems' => 1,
+				'minitems' => 1,
 			),
 		),
 		'url' => array(

@@ -28,7 +28,7 @@
  * Repository for Tx_Assets_Domain_Model_Asset
  */
 class Tx_Assets_Domain_Repository_AssetFileRepository extends Tx_Assets_Domain_Repository_AssetPathRepository implements Tx_Extbase_Persistence_RepositoryInterface {
-	
+
 	/**
 	 * inits 
 	 *
@@ -41,16 +41,34 @@ class Tx_Assets_Domain_Repository_AssetFileRepository extends Tx_Assets_Domain_R
 		sort($files);
 		$count = 0;
 		foreach($files as $i => $file) {
+			if ($file[0] === '.' && !$this->settings['showHidden']) {
+				continue;
+			}
 			$file = $this->root . $file;
 			$fileInfo = pathinfo($file);
 
 			switch (strtolower($fileInfo['extension'])) {
+				case 'gif':
+				case 'png':
+					$asset = t3lib_div::makeInstance('Tx_Assets_Domain_Model_Image', $file);
+					break;
 				case 'jpg':
-					$asset = t3lib_div::makeInstance('Tx_Assets_Domain_Model_Image');
-					$exifService = t3lib_div::makeInstance('Tx_Assets_Service_Exif', $file);
-					$asset->setName($exifService->getTitle());
-					$asset->setCopyright($exifService->getAuthor());
-					$asset->setImage($file);
+					$asset = t3lib_div::makeInstance('Tx_Assets_Domain_Model_Jpg', $file);
+					break;
+				case 'doc':
+					$asset = t3lib_div::makeInstance('Tx_Assets_Domain_Model_Doc', $file);
+					break;
+				case 'xls':
+					$asset = t3lib_div::makeInstance('Tx_Assets_Domain_Model_Xls', $file);
+					break;
+				case 'pdf':
+					$asset = t3lib_div::makeInstance('Tx_Assets_Domain_Model_Pdf', $file);
+					break;
+				case 'zip':
+					$asset = t3lib_div::makeInstance('Tx_Assets_Domain_Model_Zip', $file);
+					break;
+				case 'mp3':
+					$asset = t3lib_div::makeInstance('Tx_Assets_Domain_Model_Mp3', $file);
 					break;
 				case 'url':
 				case 'webloc':
@@ -61,18 +79,72 @@ class Tx_Assets_Domain_Repository_AssetFileRepository extends Tx_Assets_Domain_R
 					$asset->setUrl($url);
 					break;
 				default:
-					$asset = t3lib_div::makeInstance('Tx_Assets_Domain_Model_File');
-					$asset->setFile($file);
+					$asset = t3lib_div::makeInstance('Tx_Assets_Domain_Model_File', $file);
 			}
 			
-			if ($asset->getName() == '') {
-				$asset->setName(utf8_encode($fileInfo['filename']));
+			$asset->setCreateDate(new DateTime('@' . filemtime($file)));
+			$asset->setFileSize(filesize($file));
+			$name = $fileInfo['filename'] ? $fileInfo['filename'] : $fileInfo['basename'];
+			$asset->setName(utf8_encode($name));
+			
+			if ($this->settings['deleteLeadingNumbersInName']) {
+				$asset->setName($this->deleteLeadingNumbers($asset->getName()));
 			}
+			if ($this->settings['underscoresToSpacesInName']) {
+				$asset->setName(str_replace('_', ' ', $asset->getName()));
+			}
+			
+			if (method_exists($asset, 'overrideWithMetaData')) {
+				$asset->overrideWithMetaData();
+			}
+			
 			$asset->setUid($count);
 			$this->add($asset);
 			$count++;
 		}
 	}
+	
+	public function findByFile($file) {
+		foreach($this->objects as $object) {
+			if ($object->getFile() === $file) {
+				return $object;
+			}
+		}
+	}
+	
+	/**
+	 * finds all assets without a category
+	 *
+	 * @return array
+	 */
+	public function findWithNoCategory() {
+		$result = array();
+		foreach($this->objects as $object) {
+			if (!$object->getCategories()->toArray()) {
+				array_push($result, $object);
+			}
+		}
+		return $result;
+	}
+	
+	/**
+	 * @param string $searchWord 
+	 * @return void
+	 */
+	public function findSearchWord($searchWord) {
+		$result = array();
+		foreach($this->objects as $object) {
+			$propertiesToSearch = array('name', 'keywords', 'copyright');
+			foreach ($propertiesToSearch as $propertyName) {
+				$functionName = 'get' . ucfirst($propertyName);
+				if (stripos($object->$functionName(), $searchWord) !== false) {
+					$result[] = $object;
+					break;
+				}
+			}
+		}
+		return $result;
+	}	
 
 	/**
 	 * @return string single url

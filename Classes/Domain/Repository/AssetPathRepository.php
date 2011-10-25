@@ -35,6 +35,13 @@ class Tx_Assets_Domain_Repository_AssetPathRepository implements Tx_Extbase_Pers
 	 * @var string
 	 */
 	protected $root;
+	
+	/**
+	 * Settings for this Repository
+	 *
+	 * @var string
+	 */
+	protected $settings;
 
 	/**
 	 * Objects of this repository
@@ -51,14 +58,46 @@ class Tx_Assets_Domain_Repository_AssetPathRepository implements Tx_Extbase_Pers
 	protected $removedObjects;
 	
 	/**
-	 * Sets the Root Path
-	 *
+	 * Constructor
+	 **/
+	public function __construct($root = NULL, $settings = NULL) {
+		$this->setRoot($root);
+		if ($this->root) {
+			$this->init();
+		}
+		if (is_array($settings)) {
+			$this->setSettings($settings);
+		}
+	}
+	
+	/**
 	 * @param string $root The Root Path to set
 	 * @return void
-	 * @api
 	 */
 	public function setRoot($root) {
 		$this->root = $root;
+	}
+	
+	/**
+	 * @param array $settings 
+	 * @return void
+	 */
+	public function setSettings($settings) {
+		$this->settings = $settings;
+	}
+	
+	/**
+	 * @param array $settings 
+	 * @return void
+	 */
+	public function deleteLeadingNumbers($string) {
+		$pos = strpos($string, '_');
+		if ($pos !== false) {
+			if (is_numeric(substr($string, 0, $pos)) === true) {
+				return substr($string, $pos+1);
+			}
+		}
+		return $string;
 	}
 	
 	/**
@@ -119,9 +158,12 @@ class Tx_Assets_Domain_Repository_AssetPathRepository implements Tx_Extbase_Pers
 	 * @api
 	 */
 	public function update($modifiedObject) {
-		// $key = array_search('green', $this->objects);
-		
-		// $objects[$i] = $modifiedObject;
+		foreach($this->objects as &$object) {
+			if ($object->getPath() === $modifiedObject->getPath()) {
+				$object = $modifiedObject;
+				//TODO: we should be able to just return here?
+			}
+		}
 	}
 
 	/**

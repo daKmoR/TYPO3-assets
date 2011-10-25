@@ -59,15 +59,6 @@ class Tx_Assets_Domain_Model_Youtube extends Tx_Assets_Domain_Model_Url {
 		return $this->youtubeId;
 	}
 	
-	/**
-	 * @param string $url
-	 * @return void
-	 */
-	public function setUrl($url) {
-		$this->url = $url;
-	}
-	
-	
 	// function fetchYouTubeData($youtubeId) {
 		// $youtubeId = $youtubeId ? $youtubeId : $this->youtubeId;
 		// $xml = file_get_contents('http://gdata.youtube.com/feeds/api/videos/' . $youtubeId);

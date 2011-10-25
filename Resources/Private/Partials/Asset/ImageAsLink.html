@@ -1,0 +1,6 @@
+{namespace a=Tx_Assets_ViewHelpers}
+
+<div class="assetItem assetItemImage assetIconImage">
+	<p><a href="{asset.image}">{asset.name}</a></p>
+	<p>{asset.createDate -> f:format.date()} ({asset.imageExtension}, {asset.fileSize -> a:format.fileSize()})</p>
+</div>

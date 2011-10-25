@@ -25,9 +25,9 @@
 
 
 /**
- * File
+ * Zip
  */
-class Tx_Assets_Domain_Model_File extends Tx_Assets_Domain_Model_Files {
+class Tx_Assets_Domain_Model_Zip extends Tx_Assets_Domain_Model_Files {
 
 }
 ?>

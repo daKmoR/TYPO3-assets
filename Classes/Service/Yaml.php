@@ -23,11 +23,26 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+if (!class_exists('Spyc')) {
+	require_once(dirname(__FILE__) . '/../../Resources/Private/PHP/spyc/spyc.php');
+}
 
 /**
- * File
+ * Yaml reader
  */
-class Tx_Assets_Domain_Model_File extends Tx_Assets_Domain_Model_Files {
+class Tx_Assets_Service_Yaml {
+
+	public static function decode($input){
+		return Spyc::YAMLLoadString($input);
+	}
+	
+	public static function decodeFile($file){
+		return (file_exists($file)) ? self::decode(file_get_contents($file)) : null;
+	}
+	
+	public static function encode($input){
+		return Spyc::YAMLDump($input);
+	}
 
 }
 ?>

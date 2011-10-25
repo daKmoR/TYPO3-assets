@@ -23,11 +23,44 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
- * File
+ * Microsoft Word 2003-2007 (*.doc) Meta Data Reader
  */
-class Tx_Assets_Domain_Model_File extends Tx_Assets_Domain_Model_Files {
+class Tx_Assets_Service_DocMetadata {
 
+	function __construct($file) {
+		$content = file_get_contents($file);
+		$startToken = "\xE4\x04\x00\x00\x1E\x00\x00\x00\x24\x00\x00\x00"; // E4 04 00 00 1E 00 00 00 24 00 00 00
+		$start = strrpos($content, $startToken)+10;
+		
+		$endToken = "\x00\x00\x00\x1E\x00\x00\x00";
+		$end = strpos($content, $endToken, $start);
+		
+		$metaString = substr($content, $start, $end-$start);
+		$metaString = utf8_encode($metaString);
+		
+		foreach(explode("\x00", $metaString) as $metaData) {
+			if (strlen($metaData) >= 2) {
+				$this->metaArray[] = $metaData;
+			}
+		}
+	}
+	
+	function getTitle() {
+		return (string) $this->metaArray[0];
+	}
+	
+	function getSubject() {
+		return (string) $this->metaArray[1];
+	}
+	
+	function getCreator() {
+		return (string) $this->metaArray[2];
+	}
+	
+	function getKeywords() {
+		return (string) $this->metaArray[3];
+	}
+	
 }
 ?>

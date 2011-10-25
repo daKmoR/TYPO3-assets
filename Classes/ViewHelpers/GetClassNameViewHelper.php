@@ -40,24 +40,26 @@
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  * @api
  */
-class Tx_Assets_ViewHelpers_IsImageViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_Assets_ViewHelpers_GetClassNameViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
 	 * Check if the object is an Asset Image
 	 *
 	 * @param object $subject The Object to check
+	 * @param boolean $returnFullClass return the full Class Name or only the last part
 	 * @return boolean Tx_Assets_Domain_Model_Image yes/no
 	 * @author Thomas Allmer <at@delusionworld.com>
 	 * @api
 	 */
-	public function render($subject = NULL) {
+	public function render($subject = NULL, $returnFullClass = false) {
 		if ($subject === NULL) {
 			$subject = $this->renderChildren();
 		}	
-		if (is_object($subject) && (get_class($subject) === 'Tx_Assets_Domain_Model_Image' ||	get_class($subject) === 'Tx_Assets_Domain_Model_Jpg')) {
-			return true;
+		if (is_object($subject) && $class = get_class($subject)) {
+			$class = !$returnFullClass ? substr($class, strrpos($class, '_')+1) : $class;
+			return $class;
 		}
-		return false;
+		return '';
 	}
 }
 

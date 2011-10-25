@@ -37,12 +37,76 @@ class Tx_Assets_Domain_Repository_AssetDirectoryRepository extends Tx_Assets_Dom
 	 */
 	public function init() {
 		$this->objects = array();
-		$dirs = t3lib_div::get_dirs($this->root);
+		$this->initDir($this->root);
+	}
+	
+	/**
+	 * inits 
+	 *
+	 * @return void
+	 */	
+	protected function initDir($path, $parentCategory = NULL) {
+		$dirs = t3lib_div::get_dirs($path);
 		foreach($dirs as $dir) {
 			$category = t3lib_div::makeInstance('Tx_Assets_Domain_Model_Category');
 			$category->setName($dir);
+			if ($this->settings['deleteLeadingNumbersInName']) {
+				$category->setName($this->deleteLeadingNumbers($category->getName()));
+			}
+			if ($this->settings['underscoresToSpacesInName']) {
+				$category->setName(str_replace('_', ' ', $category->getName()));
+			}
+			$category->setPath($path . $dir . '/');
+			if ($parentCategory) {
+				$category->setParentCategory($parentCategory);
+				$parentCategory->addSubCategory($category);
+				$this->update($parentCategory);
+			}
 			$this->add($category);
+			$this->initDir($path . $dir . '/', $category);
 		}
+	}
+	
+	/**
+	 * finds all categories without a parent
+	 *
+	 * @return array list of categories without a parent
+	 */
+	public function findWithNoParent() {
+		$result = array();
+		foreach($this->objects as $object) {
+			if (!$object->getParentCategory()) {
+				array_push($result, $object);
+			}
+		}
+		return $result;
+	}
+	
+	public function findByPath($path) {
+		foreach($this->objects as $object) {
+			if ($object->getPath() === $path) {
+				return $object;
+			}
+		}
+	}
+	
+	/**
+	 * @param string $searchWord 
+	 * @return void
+	 */
+	public function findSearchWord($searchWord) {
+		$result = array();
+		foreach($this->objects as $object) {
+			$propertiesToSearch = array('name', 'description');
+			foreach ($propertiesToSearch as $propertyName) {
+				$functionName = 'get' . ucfirst($propertyName);
+				if (stripos($object->$functionName(), $searchWord) !== false) {
+					$result[] = $object;
+					break;
+				}
+			}
+		}
+		return $result;
 	}
 
 }

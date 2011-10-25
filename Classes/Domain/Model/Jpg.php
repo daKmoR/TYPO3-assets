@@ -25,9 +25,22 @@
 
 
 /**
- * File
+ * ImageJpg
  */
-class Tx_Assets_Domain_Model_File extends Tx_Assets_Domain_Model_Files {
+class Tx_Assets_Domain_Model_Jpg extends Tx_Assets_Domain_Model_Image {
+
+	/**
+	 * @return void
+	 */
+	public function overrideWithMetaData() {
+		$exifService = t3lib_div::makeInstance('Tx_Assets_Service_Exif', $this->getFile());
+		if ($exifService->getTitle() !== '') {
+			$this->setName($exifService->getTitle());
+		}
+		if ($exifService->getAuthor() !== '') {
+			$this->setCopyright($exifService->getAuthor());
+		}
+	}
 
 }
 ?>

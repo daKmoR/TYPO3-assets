@@ -27,23 +27,29 @@
 /**
  * Category
  */
- class Tx_Assets_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_Assets_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
-	 * name
-	 *
 	 * @var string $name
 	 * @validate NotEmpty
 	 */
 	protected $name;
 
 	/**
-	 * description
-	 *
 	 * @var string $description
 	 */
 	protected $description;
-
+	
+	/**
+	 * @var string $roles
+	 */
+	protected $roles;
+	
+	/**
+	 * @var array $extras
+	 */
+	protected $extras;
+	
 	/**
 	 * parentCategory
 	 *
@@ -57,6 +63,21 @@
 	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Assets_Domain_Model_Asset> $preview
 	 */
 	protected $preview;
+	
+	/**
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Assets_Domain_Model_Asset> $assets
+	 */
+	protected $assets;
+	
+	/**
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Assets_Domain_Model_Category> $subCategories
+	 */
+	protected $subCategories;	
+	
+	/**
+	 * @var string $path
+	 */
+	protected $path;
 
 	/**
 	 * __construct
@@ -80,11 +101,11 @@
 		* You may modify the constructor of this class instead
 		*/
 		$this->preview = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->assets = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->subCategories = new Tx_Extbase_Persistence_ObjectStorage();
 	}
 
 	/**
-	 * Sets the name
-	 *
 	 * @param string $name
 	 * @return void
 	 */
@@ -93,17 +114,28 @@
 	}
 
 	/**
-	 * Returns the name
-	 *
 	 * @return string
 	 */
 	public function getName() {
 		return $this->name;
 	}
+	
+	/**
+	 * @param string $path
+	 * @return void
+	 */
+	public function setPath($path) {
+		$this->path = $path;
+	}
 
 	/**
-	 * Sets the description
-	 *
+	 * @return string
+	 */
+	public function getPath() {
+		return $this->path;
+	}
+
+	/**
 	 * @param string $description
 	 * @return void
 	 */
@@ -112,12 +144,41 @@
 	}
 
 	/**
-	 * Returns the description
-	 *
 	 * @return string
 	 */
 	public function getDescription() {
 		return $this->description;
+	}
+	
+	/**
+	 * @param string $roles
+	 * @return void
+	 */
+	public function setRoles($roles) {
+		$roles = is_string($roles) ? t3lib_div::trimExplode(',', $roles) : $roles;
+		$this->roles = $roles;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getRoles() {
+		return $this->roles;
+	}
+	
+	/**
+	 * @param array $extras
+	 * @return void
+	 */
+	public function setExtras($extras) {
+		$this->extras = $extras;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getExtras() {
+		return $this->extras;
 	}
 
 	/**
@@ -176,6 +237,68 @@
 	 */
 	public function setPreview(Tx_Extbase_Persistence_ObjectStorage $preview) {
 		$this->preview = $preview;
+	}
+	
+	/**
+	 * @param Tx_Assets_Domain_Model_Asset the Asset to be added
+	 * @return void
+	 */
+	public function addAsset(Tx_Assets_Domain_Model_Asset $asset) {
+		$this->assets->attach($asset);
+	}
+
+	/**
+	 * @param Tx_Assets_Domain_Model_Asset the Asset to be removed
+	 * @return void
+	 */
+	public function removeAsset(Tx_Assets_Domain_Model_Asset $assetToRemove) {
+		$this->assets->detach($assetToRemove);
+	}
+
+	/**
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Assets_Domain_Model_Asset>
+	 */
+	public function getAssets() {
+		return $this->assets;
+	}
+
+	/**
+	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Assets_Domain_Model_Asset> $assets
+	 * @return void
+	 */
+	public function setAssets(Tx_Extbase_Persistence_ObjectStorage $assets) {
+		$this->assets = $assets;
+	}
+	
+	/**
+	 * @param Tx_Assets_Domain_Model_Category the Category to be added
+	 * @return void
+	 */
+	public function addSubCategory(Tx_Assets_Domain_Model_Category $subCategory) {
+		$this->subCategories->attach($subCategory);
+	}
+
+	/**
+	 * @param Tx_Assets_Domain_Model_Category the Asset to be removed
+	 * @return void
+	 */
+	public function removeSubCategory(Tx_Assets_Domain_Model_Category $subCategoryToRemove) {
+		$this->subCategories->detach($subCategoryToRemove);
+	}
+
+	/**
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Assets_Domain_Model_Category>
+	 */
+	public function getSubCategories() {
+		return $this->subCategories;
+	}
+
+	/**
+	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Assets_Domain_Model_Category> $subCategories
+	 * @return void
+	 */
+	public function setSubCategories(Tx_Extbase_Persistence_ObjectStorage $subCategories) {
+		$this->subCategories = $subCategories;
 	}
 
 }

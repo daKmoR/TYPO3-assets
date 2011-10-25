@@ -59,6 +59,7 @@
 	 * @return void
 	 */
 	public function listAction() {
+		//$this->assetRepository->setDefaultOrderings(array('sorting' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING));
 		$assets = $this->assetRepository->findAll();
 		//$assets = $this->imageRepository->findAll();
 		
