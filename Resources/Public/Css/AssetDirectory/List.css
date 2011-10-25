@@ -1,0 +1,4 @@
+.assetItem { float: left; width: 150px; height: 150px; line-height: 150px; margin: 5px; border: 1px solid #eee; }
+	.assetItem:hover { border-color: #666; }
+	.assetItem a { display: block; text-align: center; }
+	.assetItem a img { vertical-align: middle; }
