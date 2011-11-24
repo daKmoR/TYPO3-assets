@@ -86,10 +86,10 @@ class Tx_Assets_Domain_Repository_AssetFileRepository extends Tx_Assets_Domain_R
 			$name = $fileInfo['filename'] ? $fileInfo['filename'] : $fileInfo['basename'];
 			$asset->setName(utf8_encode($name));
 			
-			if ($this->settings['deleteLeadingNumbersInName']) {
+			if ($this->settings['deleteLeadingNumbersInName'] === true || $this->settings['deleteLeadingNumbersInName'] == 1) {
 				$asset->setName($this->deleteLeadingNumbers($asset->getName()));
 			}
-			if ($this->settings['underscoresToSpacesInName']) {
+			if ($this->settings['underscoresToSpacesInName'] === true || $this->settings['underscoresToSpacesInName'] == 1) {
 				$asset->setName(str_replace('_', ' ', $asset->getName()));
 			}
 			

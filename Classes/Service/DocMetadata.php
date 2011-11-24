@@ -29,21 +29,38 @@
 class Tx_Assets_Service_DocMetadata {
 
 	function __construct($file) {
+		$this->file = $file;
+	}
+	
+	public function read($_file = NULL) {
+		$file = $_file ? $_file : $this->file;
 		$content = file_get_contents($file);
-		$startToken = "\xE4\x04\x00\x00\x1E\x00\x00\x00\x24\x00\x00\x00"; // E4 04 00 00 1E 00 00 00 24 00 00 00
-		$start = strrpos($content, $startToken)+10;
+		$startToken = "\xE0\x85\x9F\xF2\xF9\x4F\x68\x10\xAB\x91\x08\x00\x2B\x27\xB3\xD9\x30\x00\x00\x00"; // E0 85 9F F2 F9 4F 68 10 AB 91 08 00 2B 27 B3 D9 30 00 00 00
+		$start = strrpos($content, $startToken);
 		
-		$endToken = "\x00\x00\x00\x1E\x00\x00\x00";
+		if ($start !== false) {
+			$start += 107;
+		} else {
+			return false;
+		}
+		
+		$endToken = "\xFF\xFF\x00\x00"; // FF FF 00 00
 		$end = strpos($content, $endToken, $start);
+		if ($end === false) {
+			$end = NULL;
+		} else {
+			$end = $end-$start;
+		}
 		
-		$metaString = substr($content, $start, $end-$start);
+		$metaString = substr($content, $start, $end);
 		$metaString = utf8_encode($metaString);
 		
 		foreach(explode("\x00", $metaString) as $metaData) {
-			if (strlen($metaData) >= 2) {
+			if (strlen(utf8_decode($metaData)) >= 3) {
 				$this->metaArray[] = $metaData;
 			}
 		}
+		return true;
 	}
 	
 	function getTitle() {

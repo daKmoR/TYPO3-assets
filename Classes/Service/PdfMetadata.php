@@ -26,19 +26,32 @@
 /**
  * PDF Meta Data Reader
  */
-class Tx_Assets_Service_Pdf {
+class Tx_Assets_Service_PdfMetadata {
 
 	var $encodeArray = array('<rdf:', '</rdf:', '<dc:', '</dc:', '<pdf:', '</pdf:');
 	var $decodeArray = array('<rdf_', '</rdf_', '<dc_', '</dc_', '<pdf_', '</pdf_');
 
 	function __construct($file) {
+		$this->file = $file;
+	}
+	
+	public function read($_file = NULL) {
+		$file = $_file ? $_file : $this->file;
 		$content = file_get_contents($file);
 		
 		$start = strrpos($content, '<x:xmpmeta');
+		if ($start === false) {
+			return false;
+		}
 		$metaString = substr($content, $start, strrpos($content, '/x:xmpmeta>')-$start+12);
 		$metaString = $this->decodeMeta($metaString);
 		
-		$this->metaXml = new SimpleXMLElement($metaString);
+		try {
+			$this->metaXml = new SimpleXMLElement($metaString);
+		} catch (Exception $e) {
+			return false;
+		}
+		return true;
 	}
 	
 	function decodeMeta($string) {
@@ -51,19 +64,31 @@ class Tx_Assets_Service_Pdf {
 	}
 	
 	function getTitle() {
-		return (string) $this->metaXml->rdf_RDF->rdf_Description[2]->dc_title->rdf_Alt->rdf_li;
+		$title = $this->metaXml->rdf_RDF->rdf_Description[2]->dc_title->rdf_Alt->rdf_li;
+		$title = $title === NULL ? $this->metaXml->rdf_RDF->rdf_Description[0]->dc_title->rdf_Alt->rdf_li : $title;
+		$title = $title === NULL ? $this->metaXml->rdf_RDF->rdf_Description[1]->dc_title->rdf_Alt->rdf_li : $title;
+		return (string) $title;
 	}
 	
 	function getCreator() {
-		return (string) $this->metaXml->rdf_RDF->rdf_Description[2]->dc_creator->rdf_Seq->rdf_li;
+		$creator = $this->metaXml->rdf_RDF->rdf_Description[2]->dc_creator->rdf_Seq->rdf_li;
+		$creator = $creator === NULL ? $this->metaXml->rdf_RDF->rdf_Description[0]->dc_creator->rdf_Seq->rdf_li : $creator;
+		$creator = $creator === NULL ? $this->metaXml->rdf_RDF->rdf_Description[1]->dc_creator->rdf_Seq->rdf_li : $creator;
+		return (string) $creator;
 	}
 	
 	function getDescription() {
-		return (string) $this->metaXml->rdf_RDF->rdf_Description[2]->dc_description->rdf_Alt->rdf_li;
+		$description = $this->metaXml->rdf_RDF->rdf_Description[2]->dc_description->rdf_Alt->rdf_li;
+		$description = $description === NULL ? $this->metaXml->rdf_RDF->rdf_Description[0]->dc_description->rdf_Alt->rdf_li : $description;
+		$description = $description === NULL ? $this->metaXml->rdf_RDF->rdf_Description[1]->dc_description->rdf_Alt->rdf_li : $description;
+		return (string) $description;
 	}
 	
 	function getKeywords() {
-		return (string) $this->metaXml->rdf_RDF->rdf_Description[0]->pdf_Keywords;
+		$keywords = $this->metaXml->rdf_RDF->rdf_Description[0]->pdf_Keywords;
+		$keywords = $keywords === NULL ? $this->metaXml->rdf_RDF->rdf_Description[2]->pdf_Keywords : $keywords;
+		$keywords = $keywords === NULL ? $this->metaXml->rdf_RDF->rdf_Description[1]->pdf_Keywords : $keywords;
+		return (string) $keywords;
 	}
 	
 }

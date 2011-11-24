@@ -63,7 +63,10 @@ class Tx_Assets_ViewHelpers_Uri_ImageDownloadViewHelper extends Tx_Fluid_ViewHel
 	 */
 	public function render($src, $width = NULL, $height = NULL, $minWidth = NULL, $minHeight = NULL, $maxWidth = NULL, $maxHeight = NULL) {
 		$imageSource = parent::render($src, $width, $height, $minWidth, $minHeight, $maxWidth, $maxHeight);
-		$imageSource = tx_pmkfdl::makeDownloadLink($imageSource);
+		$imageSource = urldecode($imageSource);
+		if ($imageSource) {
+			$imageSource = tx_pmkfdl::makeDownloadLink($imageSource, array());
+		}
 		return $imageSource;
 	}
 

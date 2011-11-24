@@ -49,7 +49,7 @@ class Tx_Assets_ViewHelpers_Uri_FileDownloadViewHelper extends Tx_Fluid_Core_Vie
 	 * @author Christian Baer <chr.baer@googlemail.com>
 	 */
 	public function render($src) {
-		$url = tx_pmkfdl::makeDownloadLink($src);
+		$url = tx_pmkfdl::makeDownloadLink($src, array());
 		return $url;
 	}
 

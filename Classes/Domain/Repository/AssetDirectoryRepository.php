@@ -49,10 +49,10 @@ class Tx_Assets_Domain_Repository_AssetDirectoryRepository extends Tx_Assets_Dom
 		foreach($dirs as $dir) {
 			$category = t3lib_div::makeInstance('Tx_Assets_Domain_Model_Category');
 			$category->setName($dir);
-			if ($this->settings['deleteLeadingNumbersInName']) {
+			if ($this->settings['deleteLeadingNumbersInName'] === true || $this->settings['deleteLeadingNumbersInName'] == 1) {
 				$category->setName($this->deleteLeadingNumbers($category->getName()));
 			}
-			if ($this->settings['underscoresToSpacesInName']) {
+			if ($this->settings['underscoresToSpacesInName'] === true || $this->settings['underscoresToSpacesInName'] == 1) {
 				$category->setName(str_replace('_', ' ', $category->getName()));
 			}
 			$category->setPath($path . $dir . '/');

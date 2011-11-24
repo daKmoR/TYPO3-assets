@@ -29,13 +29,24 @@
 class Tx_Assets_Service_XlsMetadata {
 
 	function __construct($file) {
+		$this->file = $file;
+	}
+	
+	public function read($_file = NULL) {
+		$file = $_file ? $_file : $this->file;
 		$content = file_get_contents($file);
 		
 		$endToken = "\x00\x00\x1E\x00\x00\x00\x10\x00\x00\x00"; // 00 00 1E 00 00 00 10 00 00 00
 		$end = strrpos($content, $endToken);
+		if ($end === false) {
+			return false;
+		}
 		
 		$startToken = "\xE4\x04\x00\x00\x1E\x00\x00"; // E4 04 00 00 1E 00 00
 		$start = strrpos($content, $startToken, (strlen($content)-$end)*-1)+10;
+		if ($start === false) {
+			return false;
+		}
 		
 		$metaString = substr($content, $start, $end-$start);
 		$metaString = utf8_encode($metaString);
@@ -45,6 +56,7 @@ class Tx_Assets_Service_XlsMetadata {
 				$this->metaArray[] = $metaData;
 			}
 		}
+		return true;
 	}
 	
 	function getTitle() {
