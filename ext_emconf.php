@@ -12,8 +12,8 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'Assets',
-	'description' => 'List you assets/files from a Database or a Directory Structure, usable for galleries, file directories, image databases...',
-	'category' => '',
+	'description' => 'based on extbase it lists your assets/files from a Database or a Directory Structure, usable for galleries, file directories, image databases... it can read basic metadata from pdf, jpg, doc, xls',
+	'category' => 'fe',
 	'author' => 'Thomas Allmer',
 	'author_email' => 'at@delusionworld.com',
 	'author_company' => '',
