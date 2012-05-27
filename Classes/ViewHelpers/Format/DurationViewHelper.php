@@ -61,10 +61,13 @@ class Tx_Assets_ViewHelpers_Format_DurationViewHelper extends Tx_Fluid_Core_View
 	 */
 	public function render($start = NULL, $end, $format = 'd.m.Y', $seperator = '–', $compareFormat = array('Y', 'm', 'd')) {
 		$formatTable = array(
-			'Y' => array('Y', 'Y', 'y', 'o'),
-			'm' => array('F', 'm', 'M', 'n', 't')
+			'Y' => array('Y', 'L', 'y', 'o'),
+			'm' => array('F', 'm', 'M', 'n', 't'),
+			'd' => array('d', 'D', 'j', 'l', 'N', 'S', 'W', 'z')
 		);
-	
+		$allYearMonthDayFormats = array('Y', 'L', 'y', 'o', 'F', 'm', 'M', 'n', 't', 'd', 'D', 'j', 'l', 'N', 'S', 'W', 'z');
+		$allTimeFormats = array('a', 'A', 'B', 'g', 'G', 'h', 'H', 'i', 's', 'u');
+
 		if ($start === NULL) {
 			$start = $this->renderChildren();
 			if ($start === NULL) {
@@ -90,7 +93,25 @@ class Tx_Assets_ViewHelpers_Format_DurationViewHelper extends Tx_Fluid_Core_View
 				throw new Tx_Fluid_Core_ViewHelper_Exception('"' . $end . '" could not be parsed by DateTime constructor.', 1315842318);
 			}
 		}
-		
+
+		// same day - show day once, time-duration if available
+		if ($start->format('d.m.Y') === $end->format('d.m.Y')) {
+			$timeFormat = $format;
+			foreach($allYearMonthDayFormats as $formatPart) {
+				$timeFormat = str_replace($formatPart, '', $timeFormat);
+			}
+			$timeFormat = str_replace(array('...', '..', '.', '///', '//', '/', ' '), array(''), $timeFormat);
+
+			$yearMonthDayFormat = $format;
+			foreach($allTimeFormats as $formatPart) {
+				$yearMonthDayFormat = str_replace($formatPart, '', $yearMonthDayFormat);
+			}
+			$yearMonthDayFormat = str_replace(array(':', ' '), array('', ''), $yearMonthDayFormat);
+
+			return $start->format($yearMonthDayFormat) . ' ' . $start->format($timeFormat) . $seperator . $end->format($timeFormat);
+		}
+
+		// separate days
 		$startFormat = $format;
 		foreach($compareFormat as $formatPart) {
 			if ($start->format($formatPart) === $end->format($formatPart)) {
@@ -101,6 +122,6 @@ class Tx_Assets_ViewHelpers_Format_DurationViewHelper extends Tx_Fluid_Core_View
 		
 		return $start->format($startFormat) . $seperator . $end->format($format);
 	}
-	
+
 }
 ?>
