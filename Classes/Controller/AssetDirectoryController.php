@@ -3,7 +3,7 @@
 *  Copyright notice
 *
 *  (c) 2011 Thomas Allmer <at@delusionworld.com>
-*  
+*
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -35,22 +35,27 @@ class Tx_Assets_Controller_AssetDirectoryController extends Tx_Extbase_MVC_Contr
 	public function initializeAction() {
 		$this->settings = $this->settings['DisplayAssetsDirectories'];
 		$this->root = $this->settings['root'];
-	
+
 		$this->assetDirectoryAndFileRepository = t3lib_div::makeInstance('Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository');
 		$this->assetDirectoryAndFileRepository->setRoot($this->root);
 		$this->assetDirectoryAndFileRepository->setSettings($this->settings);
 		$this->assetDirectoryAndFileRepository->init();
 	}
-	
+
 	/**
 	 * @return void
 	 */
 	public function listAction() {
 		$categories = $this->assetDirectoryAndFileRepository->assetDirectoryRepository->findWithNoParent();
 		$assets = $this->assetDirectoryAndFileRepository->assetFileRepository->findWithNoCategory();
-		
+
 		$this->view->assign('categories', $categories);
 		$this->view->assign('assets', $assets);
+
+		if ($this->settings['templatePath'] != '') {
+			$templateRootPath = t3lib_div::getFileAbsFileName($this->settings['templatePath']);
+			$this->view->setTemplatePathAndFilename($templateRootPath);
+		}
 	}
 
 }
