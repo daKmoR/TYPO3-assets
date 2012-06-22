@@ -167,6 +167,7 @@ $TCA['tx_assets_domain_model_standardasset'] = array(
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_assets_domain_model_asset',
+				'foreign_table_where' => 'AND 1 = 1 ORDER BY tx_assets_domain_model_asset.name',
 				'minitems' => 0,
 				'maxitems' => 1,
 			),

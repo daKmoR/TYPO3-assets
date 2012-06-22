@@ -52,8 +52,8 @@ $TCA['tx_assets_domain_model_asset'] = array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'default_sortby' => 'ORDER BY crdate',
-		'sortby' => ($configurationArray['manualSorting'] == 1 ? 'sorting' : ''),
+		'default_sortby' => 'ORDER BY name',
+#		'sortby' => ($configurationArray['manualSorting'] == 1 ? 'sorting' : 'name'),
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Asset.php',
 		'iconfile' 			=> t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_assets_domain_model_asset.gif'
 	),
@@ -108,6 +108,7 @@ $TCA['tx_assets_domain_model_standardasset'] = array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
+		'default_sortby' => 'ORDER BY crdate',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/StandardAsset.php',
 		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_items_domain_model_standardasset.gif'
 	),

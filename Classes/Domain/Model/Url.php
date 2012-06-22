@@ -27,7 +27,7 @@
 /**
  * Url
  */
-class Tx_Assets_Domain_Model_Url extends Tx_Assets_Domain_Model_Asset {
+class Tx_Assets_Domain_Model_Url extends Tx_Assets_Domain_Model_Files {
 
 	/**
 	 * @var string $url
