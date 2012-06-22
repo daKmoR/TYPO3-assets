@@ -34,6 +34,15 @@
 							</config>
 						</TCEforms>
 					</settings.DisplayAssetsDirectories.root>
+					<settings.DisplayAssetsDirectories.templatePath>
+						<TCEforms>
+							<label>Template Path</label>
+							<config>
+								<type>input</type>
+								<size>48</size>
+							</config>
+						</TCEforms>
+					</settings.DisplayAssetsDirectories.templatePath>
 				</el>
 			</ROOT>
 		</main>

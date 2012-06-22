@@ -3,7 +3,7 @@
 *  Copyright notice
 *
 *  (c) 2011 Thomas Allmer <at@delusionworld.com>
-*  
+*
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -39,6 +39,9 @@ class Tx_Assets_Domain_Model_Jpg extends Tx_Assets_Domain_Model_Image {
 		}
 		if ($exifService->getAuthor() !== '') {
 			$this->setCopyright($exifService->getAuthor());
+		}
+		if ($exifService->getComments() !== '') {
+			$this->setDescription($exifService->getComments());
 		}
 	}
 
