@@ -3,7 +3,7 @@
 *  Copyright notice
 *
 *  (c) 2011 Thomas Allmer <at@delusionworld.com>
-*  
+*
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -35,7 +35,7 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 	public function __construct($root = NULL, $settings = NULL) {
 		$this->assetDirectoryRepository = t3lib_div::makeInstance('Tx_Assets_Domain_Repository_AssetDirectoryRepository');
 		$this->assetFileRepository = t3lib_div::makeInstance('Tx_Assets_Domain_Repository_AssetFileRepository');
-		
+
 		if ($settings !== NULL) {
 			$this->setSettings($settings);
 		}
@@ -54,12 +54,12 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 	public function init($root = '') {
 		$this->root = is_dir($root) ? $root : $this->root;
 		if (!is_dir($this->root)) {
-			return 'You need to define the root directory. (example with ts: plugin.tx_assets.settings.DisplayAssetsDirectories.root = fileadmin/galerie/)';
+			die('You need to define the root directory. (example with ts: plugin.tx_assets.settings.DisplayAssetsDirectories.root = fileadmin/galerie/)');
 		}
-	
+
 		$this->assetDirectoryRepository->init();
 		$this->assetFileRepository->init();
-		
+
 		$categories = $this->assetDirectoryRepository->findAll();
 		$assetFileRepositoryForCategory = t3lib_div::makeInstance('Tx_Assets_Domain_Repository_AssetFileRepository');
 		$assetFileRepositoryForCategory->setSettings($this->settings);
@@ -74,11 +74,11 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 				$this->assetFileRepository->add($categoryAsset);
 			}
 		}
-		
+
 		$this->overrideWithFolderInfo();
 		$this->checkRoles();
 	}
-	
+
 	/**
 	 * checks each directory for defined roles, if there are any and the logged in user has none of the roles it will be removed
 	 *
@@ -93,7 +93,7 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 			}
 		}
 	}
-	
+
 	/**
 	 * removes a Category form the repository and all it's subcategories and assets
 	 *
@@ -107,13 +107,13 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 				$this->removeCategory($subCategory);
 			}
 		}
-		
+
 		foreach($category->getAssets() as $asset) {
 			$this->assetFileRepository->remove($asset);
 		}
 		$this->assetDirectoryRepository->remove($category);
 	}
-	
+
 	/**
 	 * Determines whether the currently logged in FE user belongs to any of the specified usergroups
 	 *
@@ -137,7 +137,7 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Recursively checks all categories and if there is a file .folderinfo it will override the category and assets properties with the properties defined in the yaml file
 	 * It will override from the most inner .folderinfo to the outer once. So a .folderinfo in the root will always win
@@ -149,13 +149,13 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 		foreach($category->getSubCategories() as $subCategory) {
 			$this->processCategory($subCategory);
 		}
-		
+
 		if (is_file($category->getPath() . '/.folderinfo')) {
 			$folderInfo = Tx_Assets_Service_Yaml::decodeFile($category->getPath() . '/.folderinfo');
 			$this->overrideCategoryWithFolderInfo($category, $folderInfo);
 		}
 	}
-	
+
 	/**
 	 * Checks the given Infos and override category and assets infos.
 	 * It allows also to override infos for SubCategories (array of infoSubCategories) and assets (array of infoAssets)
@@ -172,9 +172,9 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 				}
 			}
 		}
-		
+
 		$path = !is_string($category) ? $category->getPath() : $category;
-		
+
 		if (is_array($info['infoSubCategories'])) {
 			foreach ($info['infoSubCategories'] as $yamlCategoryName => $yamlCategoryInfos) {
 				if ($subCategory = $this->assetDirectoryRepository->findByPath($path . $yamlCategoryName . '/')) {
@@ -182,7 +182,7 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 				}
 			}
 		}
-		
+
 		if (is_array($info['infoAssets'])) {
 			foreach ($info['infoAssets'] as $yamlAssetName => $yamlAssetInfos) {
 				if ($asset = $this->assetFileRepository->findByFile($path . $yamlAssetName)) {
@@ -195,9 +195,9 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 				}
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * removes a Category form the repository and all it's subcategories and assets
 	 *
@@ -208,15 +208,15 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 		foreach($categories as &$category) {
 			$this->processCategory($category);
 		}
-		
+
 		if (is_file($this->root . '/.folderinfo')) {
 			$folderInfo = Tx_Assets_Service_Yaml::decodeFile($this->root . '/.folderinfo');
 			$this->overrideCategoryWithFolderInfo($this->root, $folderInfo);
 		}
 	}
-	
+
 	/**
-	 * @param string $searchWord 
+	 * @param string $searchWord
 	 * @return array of found assets and categories
 	 */
 	public function findSearchWord($searchWord) {
@@ -224,19 +224,19 @@ class Tx_Assets_Domain_Repository_AssetDirectoryAndFileRepository {
 		$categories = $this->assetDirectoryRepository->findSearchWord($searchWord);
 		return array_merge($assets, $categories);
 	}
-	
+
 	/**
-	 * @param string $root 
+	 * @param string $root
 	 * @return void
 	 */
 	public function setRoot($root) {
 		$this->root = $root;
 		$this->assetDirectoryRepository->setRoot($root);
 		$this->assetFileRepository->setRoot($root);
-	}	
-	
+	}
+
 	/**
-	 * @param array $settings 
+	 * @param array $settings
 	 * @return void
 	 */
 	public function setSettings($settings) {
