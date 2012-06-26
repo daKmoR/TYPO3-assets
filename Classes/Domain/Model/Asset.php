@@ -3,7 +3,7 @@
 *  Copyright notice
 *
 *  (c) 2011 Thomas Allmer <at@delusionworld.com>
-*  
+*
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -23,78 +23,64 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
  * Asset
  */
 class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
-	 * name
-	 *
 	 * @var string $name
 	 */
 	protected $name;
 
 	/**
-	 * caption
-	 *
 	 * @var string $caption
 	 */
 	protected $caption;
 
 	/**
-	 * alternateText
-	 *
 	 * @var string $alternateText
 	 */
 	protected $alternateText;
 
 	/**
-	 * description
-	 *
 	 * @var string $description
 	 */
 	protected $description;
 
 	/**
-	 * copyright
-	 *
 	 * @var string $copyright
 	 */
 	protected $copyright;
-	
+
 	/**
 	 * @var string $keywords
 	 */
-	protected $keywords;	
+	protected $keywords;
 
 	/**
-	 * createDate
-	 *
 	 * @var DateTime $createDate
 	 */
 	protected $createDate;
 
 	/**
-	 * preview
-	 *
 	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Assets_Domain_Model_Asset> $preview
 	 */
 	protected $preview;
 
 	/**
-	 * categories
-	 *
 	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Assets_Domain_Model_Category> $categories
 	 */
 	protected $categories;
-	
+
 	/**
-	 * allows to set the uid
-	 *
+	 * @var array $extras
+	 */
+	protected $extras;
+
+	/**
 	 * @var integer $uid
-	 */	
+	 */
 	public function setUid($uid) {
 		if ($uid !== NULL) {
 			$this->uid = (int) $uid;
@@ -102,8 +88,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Sets the name
-	 *
 	 * @param string $name
 	 * @return void
 	 */
@@ -112,8 +96,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Returns the name
-	 *
 	 * @return string
 	 */
 	public function getName() {
@@ -121,8 +103,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Sets the description
-	 *
 	 * @param string $description
 	 * @return void
 	 */
@@ -131,8 +111,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Returns the description
-	 *
 	 * @return string
 	 */
 	public function getDescription() {
@@ -142,7 +120,7 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * __construct
 	 *
-	 * @return void
+	 * @return \Tx_Assets_Domain_Model_Asset
 	 */
 	public function __construct() {
 		//Do not remove the next line: It would break the functionality
@@ -178,7 +156,7 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	public function setCopyright($copyright) {
 		$this->copyright = $copyright;
 	}
-	
+
 	/**
 	 * @return string $keywords
 	 */
@@ -195,8 +173,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Returns the createDate
-	 *
 	 * @return DateTime $createDate
 	 */
 	public function getCreateDate() {
@@ -204,8 +180,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Sets the createDate
-	 *
 	 * @param DateTime $createDate
 	 * @return void
 	 */
@@ -214,8 +188,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Adds a Asset
-	 *
 	 * @param Tx_Assets_Domain_Model_Asset $preview
 	 * @return void
 	 */
@@ -224,8 +196,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Removes a Asset
-	 *
 	 * @param Tx_Assets_Domain_Model_Asset $previewToRemove The Asset to be removed
 	 * @return void
 	 */
@@ -234,8 +204,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Returns the preview
-	 *
 	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Assets_Domain_Model_Asset> $preview
 	 */
 	public function getPreview() {
@@ -243,8 +211,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Sets the preview
-	 *
 	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Assets_Domain_Model_Asset> $preview
 	 * @return void
 	 */
@@ -253,8 +219,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Adds a Category
-	 *
 	 * @param Tx_Assets_Domain_Model_Category $category
 	 * @return void
 	 */
@@ -263,8 +227,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Removes a Category
-	 *
 	 * @param Tx_Assets_Domain_Model_Category $categoryToRemove The Category to be removed
 	 * @return void
 	 */
@@ -273,8 +235,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Returns the categories
-	 *
 	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Assets_Domain_Model_Category> $categories
 	 */
 	public function getCategories() {
@@ -282,8 +242,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Sets the categories
-	 *
 	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Assets_Domain_Model_Category> $categories
 	 * @return void
 	 */
@@ -292,8 +250,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Returns the caption
-	 *
 	 * @return string $caption
 	 */
 	public function getCaption() {
@@ -301,8 +257,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Sets the caption
-	 *
 	 * @param string $caption
 	 * @return void
 	 */
@@ -311,8 +265,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Returns the alternateText
-	 *
 	 * @return string $alternateText
 	 */
 	public function getAlternateText() {
@@ -320,8 +272,6 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Sets the alternateText
-	 *
 	 * @param string $alternateText
 	 * @return void
 	 */
@@ -329,5 +279,18 @@ class Tx_Assets_Domain_Model_Asset extends Tx_Extbase_DomainObject_AbstractEntit
 		$this->alternateText = $alternateText;
 	}
 
+	/**
+	 * @param array $extras
+	 */
+	public function setExtras($extras) {
+		$this->extras = $extras;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getExtras() {
+		return $this->extras;
+	}
+
 }
-?>
