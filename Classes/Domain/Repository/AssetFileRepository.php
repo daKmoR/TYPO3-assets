@@ -3,7 +3,7 @@
 *  Copyright notice
 *
 *  (c) 2011 Thomas Allmer <at@delusionworld.com>
-*  
+*
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -80,32 +80,35 @@ class Tx_Assets_Domain_Repository_AssetFileRepository extends Tx_Assets_Domain_R
 				default:
 					$asset = t3lib_div::makeInstance('Tx_Assets_Domain_Model_File', $file);
 			}
-			
+
 			$asset->setCreateDate(new DateTime('@' . filemtime($file)));
 			$asset->setFileSize(filesize($file));
 			$name = $fileInfo['filename'] ? $fileInfo['filename'] : $fileInfo['basename'];
-			$asset->setName(utf8_encode($name));
-			
+
+			if ($this->settings['setFileNameAsName'] === true || $this->settings['setFileNameAsName'] == 1) {
+				$asset->setName(utf8_encode($name));
+			}
 			if ($this->settings['deleteLeadingNumbersInName'] === true || $this->settings['deleteLeadingNumbersInName'] == 1) {
 				$asset->setName($this->deleteLeadingNumbers($asset->getName()));
 			}
 			if ($this->settings['underscoresToSpacesInName'] === true || $this->settings['underscoresToSpacesInName'] == 1) {
 				$asset->setName(str_replace('_', ' ', $asset->getName()));
 			}
-			
+
 			if (method_exists($asset, 'overrideWithMetaData')) {
 				$asset->overrideWithMetaData();
 			}
-			
+
 			$asset->setUid($count);
 			$this->add($asset);
 			$count++;
 		}
 	}
-	
+
 	/**
 	 * finds an asset by a given file path
 	 *
+	 * @param $file
 	 * @return Tx_Assets_Domain_Mode_Asset
 	 */
 	public function findByFile($file) {
@@ -115,7 +118,7 @@ class Tx_Assets_Domain_Repository_AssetFileRepository extends Tx_Assets_Domain_R
 			}
 		}
 	}
-	
+
 	/**
 	 * finds all assets without a category
 	 *
@@ -130,10 +133,10 @@ class Tx_Assets_Domain_Repository_AssetFileRepository extends Tx_Assets_Domain_R
 		}
 		return $result;
 	}
-	
+
 	/**
-	 * @param string $searchWord 
-	 * @return void
+	 * @param string $searchWord
+	 * @return array
 	 */
 	public function findSearchWord($searchWord) {
 		$result = array();
@@ -148,9 +151,10 @@ class Tx_Assets_Domain_Repository_AssetFileRepository extends Tx_Assets_Domain_R
 			}
 		}
 		return $result;
-	}	
+	}
 
 	/**
+	 * @param $file
 	 * @return string single url
 	 */
 	public function getUrlFromFile($file) {
@@ -161,7 +165,8 @@ class Tx_Assets_Domain_Repository_AssetFileRepository extends Tx_Assets_Domain_R
 	}
 
 	/**
-	 * @return domain model of url
+	 * @param string $url
+	 * @return string Domain Model Class Name
 	 */
 	public function getUrlDomain($url) {
 		if (strpos($url, 'youtube.com') !== false || strpos($url, 'youtu.be') !== false) {

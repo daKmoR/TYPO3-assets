@@ -6,14 +6,15 @@ plugin.tx_assets {
 	}
 	settings {
 		DisplayAssetsDirectories {
-			root = 
+			root =
+			setFileNameAsName = 1
 			underscoresToSpacesInName = 1
 			deleteLeadingNumbersInName = 1 # a leading number is 0000_ (including the "_"; the amount of 0s is irrelevant)
 			showHidden = 0
 		}
 	}
 	persistence {
-		storagePid = 
+		storagePid =
 		classes {
 			Tx_Assets_Domain_Model_Asset {
 				subclasses {
